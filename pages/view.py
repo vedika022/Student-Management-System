@@ -2,6 +2,7 @@ import streamlit as st
 from home import connection
 import pandas as pd
 
+
 @st.dialog("AIML - FY !")
 def show_aiml_fy():
     with connection.cursor() as cursor :
@@ -56,31 +57,43 @@ def show_is_ty():
         df = pd.DataFrame(rows, columns=columns)
         st.dataframe(df, use_container_width=True)
 
-fy,sy,ty = st.columns(3)
+# st.set_page_config(layout = 'wide')
+AIML, IS = st.columns(2)
 
-with fy :
+with AIML :
+    with st.expander('Artificial Intelligence and Machine Learning') :
+        col1, col2 = st.columns(2)
 
-    if st.button(" View AIML-FY  ") :
-        show_aiml_fy()
+        with col1:
+            st.write("STUDENT DETAILS :")
+            if st.button(" FY ") :
+                show_aiml_fy()
+            if st.button(" SY ") :
+                    show_aiml_sy()
+            if st.button(" TY ") :
+                show_aiml_ty()
 
-    if st.button(" View IS-FY  ") :
-        show_aiml_fy()
+        with col2 :
+            st.write("UNIT TEST MARKS")
+            st.button("FY") 
+                # show_aiml_ut_fy()
+            st.button("SY")
+                # show_aiml_ut_sy()
+            st.button("TY")
+                # show_aiml_ut_ty()
 
-with sy :
+                
 
-    if st.button(" View AIML-SY  ") :
-        show_aiml_sy()
+with IS :
+    with st.expander('Instrumentation Enggineering') :
 
-    if st.button(" View IS-SY  ") :
-        show_is_sy()
+        if st.button(" View IS-FY  ") :
+                show_aiml_fy()
+        if st.button(" View IS-SY  ") :
+            show_is_sy()
 
-with ty :
-
-    if st.button(" View AIML-TY  ") :
-        show_aiml_ty()
-
-    if st.button(" View IS-TY  ") :
-        show_is_ty()
+        if st.button(" View IS-TY  ") :
+            show_is_ty()
         
 
 # st.snow()
