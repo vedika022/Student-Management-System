@@ -1,16 +1,73 @@
-
 [theme]
 
+# Base Theme
+base = "light"
 
-# Primary accent color.
-primaryColor = "#9c077f"
+# Main Colors
+primaryColor = "#A05A6C"                  # Dusty Rose
+backgroundColor = "#F8F3F1"               # Warm Ivory
+secondaryBackgroundColor = "#EFE2DE"      # Soft Blush
+textColor = "#433536"                     # Warm Charcoal
 
-# Background color of the app.
-backgroundColor = "#770c62"
+# Basic Color Palette
+redColor = "#A64D5E"
+orangeColor = "#C88A63"
+yellowColor = "#D7B56D"
+blueColor = "#6B8AA6"
+greenColor = "#7C9A72"
+violetColor = "#8A6A8F"
+grayColor = "#8B8484"
 
-# Background color used for most interactive widgets.
-secondaryBackgroundColor = "#3d0727f8"
+# Background Colors
+redBackgroundColor = "#F7E5E8"
+orangeBackgroundColor = "#F9EEE6"
+yellowBackgroundColor = "#FBF5E2"
+blueBackgroundColor = "#EAF2F8"
+greenBackgroundColor = "#ECF5E8"
+violetBackgroundColor = "#F1EBF5"
+grayBackgroundColor = "#F2EEEE"
 
-# Color used for almost all text.
-textColor = "#d3870cf8"
+# Text Colors
+redTextColor = "#7A2F42"
+orangeTextColor = "#9B5E36"
+yellowTextColor = "#7F6200"
+blueTextColor = "#45627A"
+greenTextColor = "#4D6B45"
+violetTextColor = "#634D68"
+grayTextColor = "#605858"
 
+# Links
+linkColor = "#7A5260"
+linkUnderline = false
+
+# Typography
+font = "serif"
+baseFontSize = 16
+baseFontWeight = 400
+
+headingFont = "serif"
+headingFontSizes = [
+    "3rem",
+    "2.5rem",
+    "2rem",
+    "1.6rem",
+    "1.3rem",
+    "1rem"
+]
+headingFontWeights = [700, 600, 600, 600, 600, 600]
+
+codeFont = "monospace"
+codeFontSize = "0.9rem"
+codeFontWeight = 400
+
+# Rounded Corners
+baseRadius = "medium"
+buttonRadius = "full"
+
+# Borders
+borderColor = "#D6C2BE"
+dataframeBorderColor = "#D6C2BE"
+dataframeHeaderBackgroundColor = "#E9D8D4"
+
+showWidgetBorder = true
+showSidebarBorder = true

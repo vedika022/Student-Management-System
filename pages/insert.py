@@ -1,8 +1,8 @@
 import streamlit as st
-from home import connection
+from Home import connection
 import oracledb
 
-st.title("Insert *new* student details ")
+st.header("Insert *new* student details ")
 
 with st.container(horizontal_alignment='center') :
     option = st.selectbox("Select Department :",['Artificial Intelligence and Machine Learning',
