@@ -4,7 +4,7 @@ import pandas as pd
 
 
 
-@st.dialog("AIML - FY !")
+@st.dialog("AIML - FY !", width="large")
 def show_aiml_fy():
     with connection.cursor() as cursor :
         cursor.execute('SELECT * FROM AIML_STUDENTS_FY')    
@@ -13,7 +13,7 @@ def show_aiml_fy():
         df = pd.DataFrame(rows, columns=columns)
         st.dataframe(df, use_container_width=True)
 
-@st.dialog("AIML - SY !")
+@st.dialog("AIML - SY !", width="large")
 def show_aiml_sy():
     with connection.cursor() as cursor :
         cursor.execute('SELECT * FROM AIML_STUDENTS_SY')    
@@ -22,7 +22,7 @@ def show_aiml_sy():
         df = pd.DataFrame(rows, columns=columns)
         st.dataframe(df, use_container_width=True)
 
-@st.dialog("AIML - TY !")
+@st.dialog("AIML - TY !", width="large")
 def show_aiml_ty():
     with connection.cursor() as cursor :
         cursor.execute('SELECT * FROM AIML_STUDENTS_TY')    
@@ -31,7 +31,7 @@ def show_aiml_ty():
         df = pd.DataFrame(rows, columns=columns)
         st.dataframe(df, use_container_width=True)
 
-@st.dialog("IS - FY !")
+@st.dialog("IS - FY !", width="large")
 def show_is_fy():
     with connection.cursor() as cursor :
         cursor.execute('SELECT * FROM IS_STUDENTS_FY')    
@@ -40,7 +40,7 @@ def show_is_fy():
         df = pd.DataFrame(rows, columns=columns)
         st.dataframe(df, use_container_width=True)
 
-@st.dialog("IS - SY !")
+@st.dialog("IS - SY !", width="large")
 def show_is_sy():
     with connection.cursor() as cursor :
         cursor.execute('SELECT * FROM IS_STUDENTS_sY')    
@@ -49,7 +49,7 @@ def show_is_sy():
         df = pd.DataFrame(rows, columns=columns)
         st.dataframe(df, use_container_width=True)
 
-@st.dialog("IS - TY !")
+@st.dialog("IS - TY !", width="large")
 def show_is_ty():
     with connection.cursor() as cursor :
         cursor.execute('SELECT * FROM IS_STUDENTS_TY')    
