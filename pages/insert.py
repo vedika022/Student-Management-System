@@ -1,5 +1,5 @@
 import streamlit as st
-from Home import connection
+from app import connection
 import oracledb
 
 st.header("Insert *new* student details ")

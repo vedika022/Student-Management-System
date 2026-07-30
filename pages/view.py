@@ -1,5 +1,5 @@
 import streamlit as st
-from home import connection
+from app import connection
 import pandas as pd
 
 
