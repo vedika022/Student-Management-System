@@ -12,6 +12,8 @@ if "connection_toast_shown" not in st.session_state:
 
 st.title('Student Managment System !')
 
+
+
 # if st.button("NExt page ") :
 #     st.switch_page("pages/view.py")
 
