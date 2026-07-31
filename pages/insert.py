@@ -1,6 +1,7 @@
 import streamlit as st
-from app import connection
+from db import get_connection
 import oracledb
+
 
 st.header("Insert *new* student details ")
 
@@ -46,7 +47,8 @@ def Insert_func() :
     }
 
     sel_year = year_map[year]
-
+    
+    connection = get_connection()
     with connection.cursor() as cursor :
         try :
             # cursor.execute(f"INSERT INTO STUDENTS_AIML_1 " \

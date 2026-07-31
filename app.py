@@ -1,14 +1,11 @@
-import oracledb 
+
 import streamlit as st
+from db import get_connection
 
-oracledb.init_oracle_client( lib_dir=r"C:\oraclexe\instantclient_23_26")
+connection = get_connection()
 
+if connection :
+    st.toast("Connected !")
 
-connection = oracledb.connect(user = 'STUDENTS', password = 'me12', dsn = 'localhost:1521/XE')
-
-if "connection_toast_shown" not in st.session_state:
-    st.toast("Connected successfully!")
-    st.session_state.connection_toast_shown = True
-
-pg = st.navigation(['Home.py','pages/Insert.py','pages/View.py'], position='top')
+pg = st.navigation(['Home.py','pages/Insert.py','pages/View.py','pages/Update.py'], position='top')
 pg.run()
