@@ -1,7 +1,7 @@
 import streamlit as st
 from db import get_connection
 
-st.title("Update Student Record")
+st.header("Update Student Record")
 
 if st.session_state.get("status") == "success" :
     st.success('Student Record Updated !')
