@@ -3,8 +3,17 @@ from db import get_connection
 
 st.title("Update Student Record")
 
-# Initialize step
-if "step" not in st.session_state:
+if st.session_state.get("status") == "success" :
+    st.success('Student Record Updated !')
+    del st.session_state['status']
+    st.session_state.step = 1
+if st.session_state.get('status')== 'failure' :
+    st.error("Enrollment number not found.")
+    del st.session_state['status']
+    st.session_state.step = 1
+
+
+if "step" not in st.session_state :
     st.session_state.step = 1
 if "to_update" not in st.session_state:
     st.session_state.to_update = []
@@ -32,7 +41,7 @@ if st.session_state.step == 1:
 
     selected = st.multiselect(
         "Select what to update",
-        ["Enrollment Number", "Name", "Email", "Phone", "Year"]
+        ["Enrollment Number", "Name", "Email", "Phone"]
     )
 
     if st.button("Proceed"):
@@ -86,56 +95,69 @@ if st.session_state.step == 2:
             st.rerun()
     # st.write(to_update)
     with col2:
+        btn = st.button("Update Record")
         
-        if st.button("Update Record"):
-            # st.write(to_update)
+    if btn :
+        # st.write(to_update)
 
-            updates = {}
+        updates = {}
 
-            if "Enrollment Number" in to_update:
-                updates["ENRLNO"] = st.session_state.upd_rolln
+        if "Enrollment Number" in to_update:
+            updates["ENRLNO"] = st.session_state.upd_rolln
 
-            if "Name" in to_update:
-                updates["FIRST_NAME"] = st.session_state.fname
-                updates["MIDDLE_NAME"] = st.session_state.mname
-                updates["LAST_NAME"] = st.session_state.lname
+        if "Name" in to_update:
+            updates["FIRST_NAME"] = st.session_state.fname
+            updates["MIDDLE_NAME"] = st.session_state.mname
+            updates["LAST_NAME"] = st.session_state.lname
 
-            if "Email" in to_update:
-                updates["EMAIL"] = st.session_state.email
+        if "Email" in to_update:
+            updates["EMAIL"] = st.session_state.email
 
-            if "Phone" in to_update:
-                updates["PHONE"] = st.session_state.phone
+        if "Phone" in to_update:
+            updates["PHONE"] = st.session_state.phone
 
-            slt_dept_map = {
+        slt_dept_map = {
                 "Artificial Intelligence and Machine Learning": "AIML_STUDENTS_",
                 "Instrumentation Enggineering": "IS_STUDENTS_"
             }
 
-            table = (
+        table = (
                 f"{slt_dept_map[slt_dept]}"
                 f"{slt_year}"
             )
 
             # Build: EMAIL = :EMAIL, PHONE = :PHONE, ...
-            set_clause = ", ".join(
+        set_clause = ", ".join(
                 [f"{col} = :{col}" for col in updates.keys()]
             )
 
-            query = f"""
+        query = f"""
                 UPDATE {table}
                 SET {set_clause}
                 WHERE ENRLNO = :OLD_ENRLNO
             """
 
             # Bind values
-            bind_vars = updates.copy()
-            bind_vars["OLD_ENRLNO"] = enrl_num_for_update
+        bind_vars = updates.copy()
+        bind_vars["OLD_ENRLNO"] = enrl_num_for_update
 
-            connection = get_connection()
+        connection = get_connection()
 
+        try:
             with connection.cursor() as cursor:
                 cursor.execute(query, bind_vars)
 
-            connection.commit()
-            st.success("Record updated successfully!")
-            st.rerun()
+                if cursor.rowcount == 0:
+                    connection.rollback()
+                    st.session_state["status"] = 'failure'
+                    st.rerun()
+                else:
+                    connection.commit()
+                    st.session_state["status"] = "success"
+                    st.rerun()
+
+        except Exception as e:
+            connection.rollback()
+            st.error(f"Error: {e}")
+
+

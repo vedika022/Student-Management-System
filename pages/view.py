@@ -2,7 +2,7 @@ import streamlit as st
 from db import get_connection
 import pandas as pd
 
-@st.dialog("Student Details :")
+@st.dialog("Student Details :",width='large')
 def show_details(table):
     try:
         connection = get_connection()
