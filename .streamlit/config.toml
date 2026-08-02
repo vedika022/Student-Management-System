@@ -1,7 +1,8 @@
 [theme]
 
 # Base Theme
-base = "light"
+base = "dark"
+
 
 # Main Colors
 primaryColor = "#A05A6C"                  # Dusty Rose
