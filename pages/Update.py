@@ -21,19 +21,6 @@ if "to_update" not in st.session_state:
 # ---------------- STEP 1 ----------------
 if st.session_state.step == 1:
 
-    dept = st.selectbox(
-        "Select Department",
-        [
-            "Artificial Intelligence and Machine Learning",
-            "Instrumentation Enggineering"
-        ]
-
-    )
-
-    year = st.selectbox(
-        "Select Year",
-        ["FY", "SY", "TY"],
-    )
 
     enrl_num = st.text_input(
         "Enter Enrollment Number"
@@ -41,14 +28,13 @@ if st.session_state.step == 1:
 
     selected = st.multiselect(
         "Select what to update",
-        ["Enrollment Number", "Name", "Email", "Phone"]
+        ["Enrollment Number", "Name", "Email", "Phone","Year","Branch"]
     )
 
     if st.button("Proceed"):
         st.session_state.selected = selected
-        st.session_state.dept = dept
         st.session_state.enrl_num = enrl_num
-        st.session_state.year = year
+
 
         st.session_state.step = 2
         st.rerun()
@@ -58,9 +44,8 @@ if st.session_state.step == 1:
 if st.session_state.step == 2:
 
     to_update = st.session_state.selected
-    slt_dept = st.session_state.dept
     enrl_num_for_update = st.session_state.enrl_num
-    slt_year = st.session_state.year
+
     # st.write(to_update)
 
     if "Enrollment Number" in to_update:
@@ -87,18 +72,32 @@ if st.session_state.step == 2:
     if "Phone" in to_update:
         st.number_input("Phone", key="phone")
 
+    if "Year" in to_update :
+        st.selectbox('Enter New Year :',['FY', 'SY', 'TY'], key='newyear')
+
+    if "Branch" in to_update:
+        branch = st.selectbox(
+        "Select New Branch",
+        [
+            "Artificial Intelligence and Machine Learning",
+            "Instrumentation Enggineering"
+        ], key='branch')
+
+
+
+
     col1, col2 = st.columns(2)
 
     with col1:
         if st.button("Back"):
             st.session_state.step = 1
             st.rerun()
-    # st.write(to_update)
+
     with col2:
         btn = st.button("Update Record")
-        
+
+#    sql command for insertion    
     if btn :
-        # st.write(to_update)
 
         updates = {}
 
@@ -114,17 +113,20 @@ if st.session_state.step == 2:
             updates["EMAIL"] = st.session_state.email
 
         if "Phone" in to_update:
-            updates["PHONE"] = st.session_state.phone
+            phone_int = int(st.session_state.phone)
+            updates["PHONE"] = phone_int
 
-        slt_dept_map = {
-                "Artificial Intelligence and Machine Learning": "AIML_STUDENTS_",
-                "Instrumentation Enggineering": "IS_STUDENTS_"
-            }
+        if "Year" in to_update:
+            year_map = { 'FY' : 1, 'SY' : 2, 'TY' : 3}
 
-        table = (
-                f"{slt_dept_map[slt_dept]}"
-                f"{slt_year}"
-            )
+            int_year = year_map[st.session_state['newyear']]
+            updates["YEAR"] = int_year
+        if "Branch" in to_update:
+            branch_map = {"Artificial Intelligence and Machine Learning" : 'AIML',
+                        "Instrumentation Enggineering" : 'IS'}
+            branch_final = branch_map[st.session_state.branch]
+            updates["BRANCH"] = branch_final
+        
 
             # Build: EMAIL = :EMAIL, PHONE = :PHONE, ...
         set_clause = ", ".join(
@@ -132,7 +134,7 @@ if st.session_state.step == 2:
             )
 
         query = f"""
-                UPDATE {table}
+                UPDATE STUDENTS
                 SET {set_clause}
                 WHERE ENRLNO = :OLD_ENRLNO
             """

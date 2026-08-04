@@ -6,7 +6,8 @@ connection = get_connection()
 if connection :
     st.toast("Connected !")
 st.title('Student Managment System !',text_alignment='center')
-""
+
+st.image(r"Images\flower.jfif")
 # st.header("A platform for maintaining student records and viewing academic results.",text_alignment = 'center')
 
 

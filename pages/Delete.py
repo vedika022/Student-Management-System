@@ -7,17 +7,14 @@ st.header('Delete Student Data :')
 if st.session_state.get('status') == 'success' :
     st.success("Deleted student record !")
     del st.session_state['status']
+    st.session_state['enrl'] = ''
 
 elif st.session_state.get('status') == 'failure' :
     st.error("Enrollment number doesnt exist.")
     del st.session_state['status']
 
 
-dept = st.selectbox("Select Department",["Artificial Intelligence and Machine Learning","Instrumentation Enggineering"])
-
-year = st.selectbox("Select Year",["FY", "SY", "TY"],)
-
-enrl_num = st.text_input("Enter Enrollment Number")
+enrl_num = st.text_input("Enter Enrollment Number",key='enrl')
 
 if "show_confirm" not in st.session_state:
     st.session_state.show_confirm = False
@@ -33,20 +30,11 @@ def confirm_delete():
 
     if confirm :
 
-            dept_map = {
-                            "Artificial Intelligence and Machine Learning": "AIML_STUDENTS_",
-                            "Instrumentation Enggineering": "IS_STUDENTS_"
-                        }
-
-            table = (
-                            f"{dept_map[dept]}"
-                            f"{year}"
-                        )
             connection = get_connection()
             with connection.cursor() as cursor :
                 try :
                     # cursor.execute(F'DELETE FROM {table} where ENRLNO = {enrl_num}')
-                    cursor.execute(f"DELETE FROM {table} WHERE ENRLNO = :1",
+                    cursor.execute(f"DELETE FROM STUDENTS WHERE ENRLNO = :1",
                             [enrl_num])
                     connection.commit()
 

@@ -31,22 +31,22 @@ def Insert_func() :
     rolln = st.session_state.rolln
     fname = st.session_state.fname
 
-    if not rolln or not fname or not lname :
-        st.warning("Please enter both Roll No. and Name.")
+    if not rolln or not fname or not lname or not phone or not email :
+        st.warning("All fields are Required.")
         return
 
     if option == 'Artificial Intelligence and Machine Learning' :
-        dept = 'AIML_STUDENTS_' 
+        dept = 'AIML' 
     else :
-        dept = 'IS_STUDENTS_'
+        dept = 'IS'
 
     year_map = {
-        "First Year": "FY",
-        "Second Year": "SY",
-        "Third Year": "TY"
+        "First Year": 1,
+        "Second Year": 2,
+        "Third Year": 3
     }
 
-    sel_year = year_map[year]
+    sel_year = int(year_map[year])
     
     connection = get_connection()
     with connection.cursor() as cursor :
@@ -54,8 +54,8 @@ def Insert_func() :
             # cursor.execute(f"INSERT INTO STUDENTS_AIML_1 " \
             # "VALUES({rolln},{name})")
 
-            cursor.execute(f"INSERT INTO {dept}{sel_year} VALUES (:1, :2, :3, :4, :5, :6)",
-            (rolln, fname, mname, lname, email, phone)
+            cursor.execute(f"INSERT INTO STUDENTs VALUES (:1, :2, :3, :4, :5, :6, :7, :8)",
+            (rolln, sel_year, dept, fname, mname, lname, email, int(phone))
             )
 
             connection.commit()
