@@ -3,11 +3,16 @@ from db import get_connection
 import pandas as pd
 
 @st.dialog("Student Details :",width='large')
-def show_details(table):
+def show_details(branch, year):
     try:
         connection = get_connection()
         with connection.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM {table}")
+            cursor.execute("""
+                SELECT *
+                FROM STUDENTS
+                WHERE year = :1
+                AND branch = :2
+            """, [year, branch])
             columns = [c[0] for c in cursor.description]
             rows = cursor.fetchall()
         df = pd.DataFrame(rows, columns=columns)
@@ -26,11 +31,11 @@ with AIML :
 
         st.write("STUDENT DETAILS :")
         if st.button("FY", key='AIML_FY') :
-            show_details('AIML_STUDENTS_FY')
+            show_details('AIML',1)
         if st.button("SY",key='AIML_SY') :
-            show_details('AIML_STUDENTS_SY')
+            show_details('AIML',2)
         if st.button("TY",key='AIML_TY') :
-            show_details('AIML_STUDENTS_TY')
+            show_details('AIML',3)
 
                 
 
@@ -38,11 +43,11 @@ with IS :
     with st.expander('Instrumentation Enggineering') :
 
         if st.button("FY",key='IS_FY') :
-            show_details('IS_STUDENTS_FY')
+            show_details('IS',1)
         if st.button("SY",key='IS_SY') :
-            show_details('IS_STUDENTS_SY')
+            show_details('IS',2)
         if st.button("TY",key='IS_TY') :
-            show_details('IS_STUDENTS_TY')
+            show_details('IS',3)
         
 
 # st.snow()
