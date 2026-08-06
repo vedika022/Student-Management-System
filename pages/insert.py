@@ -58,6 +58,9 @@ def Insert_func() :
             (rolln, sel_year, dept, fname, mname, lname, email, int(phone))
             )
 
+            cursor.execute('INSERT INTO MARKS VALUES (:1, :2, :3, :4, :5)',
+                           [rolln, None, 0, 0, 0])
+
             connection.commit()
             st.success("Student inserted successfully!")
             # Clear input fields
@@ -66,7 +69,8 @@ def Insert_func() :
             st.session_state.mname = ""
             st.session_state.lname = ""
             st.session_state.email = ""
-            st.session_state.phone = ""
+            st.session_state.phone = 0
+
             
             
 
